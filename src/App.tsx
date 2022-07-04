@@ -1,91 +1,96 @@
-import axios from 'axios';
-import React, { Component } from 'react';
-import './App.css';
-import logo from './logo.svg';
+import moment from 'moment';
+import { Component } from 'react';
+import logo from './images/logo.svg';
+import deleteIcon from './images/close.svg';
+import notes from './data.json';
+import { CreateNote } from './components/createNote';
+import './styles/app.scss';
+
+interface Note {
+    text: string;
+    date: string;
+}
 
 interface AppState {
     myNote: string;
-    notes: string[];
+    notes: Note[];
 }
-
 
 class App extends Component<{}, AppState> {
     state = {
         myNote: '',
         notes: [],
-    }
+    };
 
     componentDidMount() {
         this.loadNotes();
     }
 
     loadNotes = () => {
-        axios.get('https://bonus.dev.thewhite.ru/api/news-service/articles/list')
-            .then((response: any) => {
-                console.log('get', response.data);
-                this.setState({
-                    notes: ['1', '2'],
-                });
-            })
-            .catch((error: string) => console.log(error));
+        this.setState({ notes });
     };
 
-    saveNote = () => {
-        const newNotes: string[] = this.state.notes;
-        newNotes.push(this.state.myNote);
-        console.log(newNotes);
+    saveNote = (newNote: string) => {
+        const newNotes: Note[] = this.state.notes;
+        newNotes.push({
+            text: newNote,
+            date: moment()
+                .format('DD.MM.YYYY'),
+        });
         this.setState({
             myNote: '',
             notes: newNotes,
         });
-    }
+    };
 
-    setNote = (text: string) => {
-        this.setState({ myNote: text });
-    }
+    deleteNote = (index: number) => {
+        const newNotes: Note[] = this.state.notes;
+        newNotes.splice(index, 1);
+        this.setState({ notes: newNotes });
+    };
 
     render() {
         return (
-            <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    FlyNote
-                </p>
-            </header>
-            <main>
-                <h1>
-                    FLYNOTE NOTES
-                </h1>
-                <div
-                    className="wrapper"
-                >
-                    <textarea
-                        placeholder="Напишите заметку"
-                        value={this.state.myNote}
-                        onChange={(event) => this.setNote(event.target.value)}
+            <div className="app">
+                <header className="app-header">
+                    <img src={logo} className="app-logo" alt="logo" />
+                    <p>
+                        React example
+                    </p>
+                </header>
+                <main>
+                    <h1>
+                        Заметки
+                    </h1>
+                    <CreateNote
+                        note={this.state.myNote}
+                        saveNote={(newNote) => this.saveNote(newNote)}
                     />
-                    <button
-                        className="save-button"
-                        onClick={this.saveNote}
+                    <ul
+                        className="notes"
                     >
-                        Сохранить
-                    </button>
-                </div>
-                <ul
-                    className="notes"
-                >
-                    {
-                        this.state.notes.map((note, index) => (
-                            <li
-                                key={index}
-                            >
-                                {note}
-                            </li>
-                        ))
-                    }
-                </ul>
-            </main>
+                        {
+                            this.state.notes.map((note: Note, index: number) => (
+                                <li
+                                    key={index}
+                                    className="notes__item"
+                                >
+                                    <span> 
+                                        {note.text}
+                                    </span>
+                                    <span>
+                                        {note.date}
+                                    </span>
+                                    <button
+                                        onClick={() => this.deleteNote(index)}
+                                    >
+                                        <img src={deleteIcon} alt={'delete'} />
+                                    </button>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </main>
             </div>
         );
     }

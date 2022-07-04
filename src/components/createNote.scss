@@ -1,0 +1,13 @@
+@import 'src/styles/variables';
+
+.create-note {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+
+  textarea {
+    border: 1px solid $secondary;
+  }
+}
