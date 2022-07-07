@@ -1,15 +1,11 @@
 import moment from 'moment';
 import { Component } from 'react';
-import logo from './images/logo.svg';
-import deleteIcon from './images/close.svg';
 import notes from './data.json';
-import { CreateNote } from './components/createNote';
+import { CreateNote } from './components/createNote/createNote';
+import { Header } from './components/header/header';
 import './styles/app.scss';
-
-interface Note {
-    text: string;
-    date: string;
-}
+import { Note } from './interfaces/note';
+import { Notes } from './components/noteList/notes';
 
 interface AppState {
     myNote: string;
@@ -23,12 +19,8 @@ class App extends Component<{}, AppState> {
     };
 
     componentDidMount() {
-        this.loadNotes();
-    }
-
-    loadNotes = () => {
         this.setState({ notes });
-    };
+    }
 
     saveNote = (newNote: string) => {
         const newNotes: Note[] = this.state.notes;
@@ -51,45 +43,22 @@ class App extends Component<{}, AppState> {
 
     render() {
         return (
-            <div className="app">
-                <header className="app-header">
-                    <img src={logo} className="app-logo" alt="logo" />
-                    <p>
-                        React example
-                    </p>
-                </header>
+            <div className={'app'}>
+                <Header/>
                 <main>
-                    <h1>
-                        Заметки
-                    </h1>
-                    <CreateNote
-                        note={this.state.myNote}
-                        saveNote={(newNote) => this.saveNote(newNote)}
-                    />
-                    <ul
-                        className="notes"
-                    >
-                        {
-                            this.state.notes.map((note: Note, index: number) => (
-                                <li
-                                    key={index}
-                                    className="notes__item"
-                                >
-                                    <span> 
-                                        {note.text}
-                                    </span>
-                                    <span>
-                                        {note.date}
-                                    </span>
-                                    <button
-                                        onClick={() => this.deleteNote(index)}
-                                    >
-                                        <img src={deleteIcon} alt={'delete'} />
-                                    </button>
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <div className={'container'}>
+                        <h1 className={'app__title'}>
+                            Заметки
+                        </h1>
+                        <CreateNote
+                            note={this.state.myNote}
+                            saveNote={(newNote) => this.saveNote(newNote)}
+                        />
+                        <Notes
+                            notes={this.state.notes}
+                            deleteNote={(index) => this.deleteNote(index)}
+                        />
+                    </div>
                 </main>
             </div>
         );

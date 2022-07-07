@@ -1,73 +1,40 @@
+@import 'fonts';
+@import 'mixins';
 @import 'reset';
+@import 'variables';
 
-.app-logo {
-  height: 40%;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .app-logo {
-    animation: app-logo-spin infinite 20s linear;
+.app {
+  &__title {
+    text-align: center;
   }
-}
-
-.app-header {
-  background-color: #282c34;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-@keyframes app-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-h1 {
-  text-align: center;
 }
 
 main {
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  padding: 20px 0;
 }
 
-textarea {
-  width: 600px;
-  max-width: 100%;
-  height: 300px;
-  padding: 10px;
-  font-size: 20px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  @include max-width(600) {
+    padding: 0 20px;
+  }
 }
 
 .primary-button {
   padding: 10px;
-  background-color: #eee;
+  background-color: $accent;
+  color: $white;
   border: none;
-}
+  border-radius: 8px;
 
-.notes {
-  max-width: 400px;
-  margin: 10px auto;
-  padding: 10px;
-  border: 1px solid #eee;
-  list-style-type: none;
+  &:disabled {
+    background-color: $secondary;
+  }
 
-  &__item {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 0;
+  &:not([disabled]):hover {
+    background-color: $accent-hover;
   }
 }

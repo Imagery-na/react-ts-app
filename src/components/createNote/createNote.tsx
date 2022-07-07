@@ -19,8 +19,9 @@ export const CreateNote = (props: CreateNoteParams) => {
                 onChange={(event) => setNote(event.target.value)}
             />
             <button
-                className="save-button"
+                className="primary-button"
                 onClick={() => props.saveNote(note)}
+                disabled={!note}
             >
                 Сохранить
             </button>

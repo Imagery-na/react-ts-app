@@ -29,6 +29,8 @@
         ],
         "no-console": ["warn"],
         "no-undef": "off",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "no-multiple-empty-lines": "warn",
+        "eol-last": "warn"
     }
 }

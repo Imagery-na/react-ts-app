@@ -3,14 +3,14 @@ $white: #fff;
 $black: #000;
 
 // Project main colors
-$primary: $black;
+$primary: #282c34;
 $secondary: #888686;
-$accent: #232793;
+$accent: #1c1e72;
 $accent-light: #549dd5;
 
 // Style guide colors
 $error: #d03b0e;
-$accent-hover: #00338c;
+$accent-hover: #073c97;
 $disabled: #e9e9e9;
 
 // Other variables
@@ -32,4 +32,4 @@ $default-transition: all 0.35s ease-out;
   }
 }
 
-$animation-spin: spin 2s linear 0s infinite;
+$animation-spin: spin 6s linear 0s infinite;
