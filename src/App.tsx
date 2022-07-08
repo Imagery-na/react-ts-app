@@ -8,13 +8,11 @@ import { Note } from './interfaces/note';
 import { Notes } from './components/noteList/notes';
 
 interface AppState {
-    myNote: string;
     notes: Note[];
 }
 
 class App extends Component<{}, AppState> {
     state = {
-        myNote: '',
         notes: [],
     };
 
@@ -29,10 +27,7 @@ class App extends Component<{}, AppState> {
             date: moment()
                 .format('DD.MM.YYYY'),
         });
-        this.setState({
-            myNote: '',
-            notes: newNotes,
-        });
+        this.setState({ notes: newNotes });
     };
 
     deleteNote = (index: number) => {
@@ -51,7 +46,6 @@ class App extends Component<{}, AppState> {
                             Заметки
                         </h1>
                         <CreateNote
-                            note={this.state.myNote}
                             saveNote={(newNote) => this.saveNote(newNote)}
                         />
                         <Notes

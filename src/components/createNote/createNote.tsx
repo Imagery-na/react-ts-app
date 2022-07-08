@@ -2,12 +2,16 @@ import { useState } from 'react';
 import './createNote.scss';
 
 interface CreateNoteParams {
-    note: string;
     saveNote(newNote: string): void;
 }
 
 export const CreateNote = (props: CreateNoteParams) => {
-    const [ note, setNote ] = useState<string>(props.note);
+    const [ note, setNote ] = useState<string>('');
+
+    const onSaveNote = () => {
+        props.saveNote(note);
+        setNote('');
+    };
 
     return (
         <div
@@ -20,7 +24,7 @@ export const CreateNote = (props: CreateNoteParams) => {
             />
             <button
                 className="primary-button"
-                onClick={() => props.saveNote(note)}
+                onClick={() => onSaveNote()}
                 disabled={!note}
             >
                 Сохранить
